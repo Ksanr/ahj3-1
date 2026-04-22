@@ -35,5 +35,9 @@
 ## 💻 Локальный запуск
 
 ```bash
-yarn install
-yarn start
+yarn install      # установка зависимостей
+yarn start        # запуск dev сервера
+yarn build        # сборка проекта
+yarn test         # запуск тестов
+yarn coverage     # проверка покрытия
+yarn lint         # проверка кода
