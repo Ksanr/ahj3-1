@@ -4,6 +4,9 @@ import ScoreCounter from './ScoreCounter';
 import Timer from './Timer';
 import Cursor from './Cursor';
 
+// Константа только для MAX_MISSES (GOBLIN_VISIBLE_TIME_MS удалена, так как используется в Timer.js)
+const MAX_MISSES = 5;
+
 export default class GameController {
   constructor(boardContainer, scoreElement, missesElement, cursorElement) {
     this.board = new Board(boardContainer);
@@ -40,7 +43,7 @@ export default class GameController {
     this.scoreCounter.incrementMiss();
     this.board.removeGoblin(this.goblinElement);
 
-    if (this.scoreCounter.getMisses() < 5) {
+    if (this.scoreCounter.getMisses() < MAX_MISSES) {
       this.showGoblin();
     }
   }

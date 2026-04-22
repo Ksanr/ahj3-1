@@ -1,3 +1,4 @@
+// Константа для максимального количества пропусков
 const MAX_MISSES = 5;
 
 export default class ScoreCounter {
@@ -14,20 +15,22 @@ export default class ScoreCounter {
   }
 
   incrementScore() {
-    this.score += 1; // this.score++ → this.score += 1
+    this.score += 1;
     this.updateDisplay();
   }
 
   incrementMiss() {
-    this.misses += 1; // this.misses++ → this.misses += 1
+    this.misses += 1;
     this.updateDisplay();
 
+    // Использую константу вместо магического числа
     if (this.misses >= MAX_MISSES && this.gameOverCallback) {
       this.gameOverCallback();
     }
   }
 
   updateDisplay() {
+    // Проверка существования элементов
     if (this.scoreElement) {
       this.scoreElement.textContent = this.score;
     }

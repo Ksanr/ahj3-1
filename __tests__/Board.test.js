@@ -95,6 +95,27 @@ describe('Board', () => {
 
       expect(callback).toHaveBeenCalledWith(false, emptyCell);
     });
+
+    test('addClickListener должен корректно обрабатывать отсутствие callback', () => {
+      const newBoard = new Board(document.createElement('div'));
+      newBoard.createBoard();
+
+      // Вызов без callback - не должен вызывать ошибку
+      expect(() => {
+        newBoard.addClickListener(null);
+      }).not.toThrow();
+
+      // Вызов без аргументов
+      expect(() => {
+        newBoard.addClickListener();
+      }).not.toThrow();
+
+      // Убеждаемся, что после вызова без callback клик по ячейке не вызывает ошибку
+      const { cells } = newBoard;
+      expect(() => {
+        cells[0].click();
+      }).not.toThrow();
+    });
   });
 
   describe('reset', () => {
@@ -214,6 +235,42 @@ describe('Board', () => {
       board.reset(); // повторный вызов
 
       expect(board.goblinCell).toBeNull();
+    });
+  });
+
+  describe('Board - покрытие ошибок (throw)', () => {
+    test('конструктор должен выбрасывать ошибку если контейнер не найден', () => {
+      expect(() => {
+        // eslint-disable-next-line no-new
+        new Board(null);
+      }).toThrow('Контейнер для игрового поля не найден');
+    });
+
+    test('createBoard должен выбрасывать ошибку если контейнер не существует', () => {
+      const testBoard = new Board(document.createElement('div'));
+      testBoard.container = null;
+
+      expect(() => {
+        testBoard.createBoard();
+      }).toThrow('Контейнер не существует');
+    });
+
+    test('getRandomCell должен выбрасывать ошибку если нет доступных ячеек', () => {
+      const testBoard = new Board(document.createElement('div'));
+      testBoard.cells = [];
+
+      expect(() => {
+        testBoard.getRandomCell();
+      }).toThrow('Нет доступных ячеек');
+    });
+
+    test('placeGoblin должен выбрасывать ошибку если элемент гоблина не существует', () => {
+      const testBoard = new Board(document.createElement('div'));
+      testBoard.createBoard();
+
+      expect(() => {
+        testBoard.placeGoblin(null);
+      }).toThrow('Элемент гоблина не существует');
     });
   });
 });

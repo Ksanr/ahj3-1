@@ -1,8 +1,8 @@
+// Константа для времени показа гоблина
 const GOBLIN_VISIBLE_TIME_MS = 1000;
 
 export default class Timer {
   constructor() {
-    this.intervalId = null;
     this.timeoutId = null;
     this.onGoblinHide = null;
   }
@@ -14,6 +14,7 @@ export default class Timer {
   startTimer() {
     this.stopTimer();
 
+    // Использую константу вместо магического числа
     this.timeoutId = setTimeout(() => {
       if (this.onGoblinHide) {
         this.onGoblinHide();
