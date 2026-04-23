@@ -2,7 +2,7 @@
 
 # Goblin Game - Ударь гоблина! 🔨
 
-[![Build and Deploy](https://github.com/ksanr/ahj3-1/actions/workflows/deploy.yml/badge.svg)](https://github.com/YOUR_USERNAME/goblin-game-final/actions/workflows/deploy.yml)
+[![Build and Deploy](https://github.com/ksanr/ahj3-1/actions/workflows/deploy.yml/badge.svg)](https://github.com/ksanr/ahj3-1/actions/workflows/deploy.yml)
 
 Игра, где нужно успеть ударить гоблина молотком, прежде чем он исчезнет!
 
