@@ -43,15 +43,11 @@ describe('Board', () => {
       expect(board.goblinCell.classList.contains('has-goblin')).toBe(true);
     });
 
-    test('не должен размещать гоблина в той же ячейке дважды подряд', () => {
+    test('placeGoblin не должен ставить гоблина в исключённую ячейку', () => {
       const goblin = document.createElement('img');
-      board.placeGoblin(goblin);
-      const firstCell = board.goblinCell;
-
-      board.placeGoblin(goblin);
-      const secondCell = board.goblinCell;
-
-      expect(firstCell).not.toBe(secondCell);
+      const excludeCell = board.cells[0];
+      board.placeGoblin(goblin, excludeCell);
+      expect(board.goblinCell).not.toBe(excludeCell);
     });
 
     test('должен удалять гоблина из ячейки', () => {
@@ -191,7 +187,7 @@ describe('Board', () => {
       const firstCell = board.goblinCell;
 
       // Удаляем гоблина вручную, не через removeGoblin
-      firstCell.removeChild(goblin);
+      firstCell.remove(goblin);
       firstCell.classList.remove('has-goblin');
 
       // Размещаем другого гоблина

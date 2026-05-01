@@ -3,6 +3,9 @@ export default class Cursor {
     this.cursorElement = cursorElement;
     this.isVisible = true;
     this.init();
+    if (this.cursorElement) {
+      this.cursorElement.style.display = 'block';
+    }
   }
 
   init() {

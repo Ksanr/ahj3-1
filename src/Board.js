@@ -35,21 +35,25 @@ export default class Board {
     return this.cells[randomIndex];
   }
 
-  placeGoblin(goblinElement) {
+  placeGoblin(goblinElement, excludeCell = null) {
     if (!goblinElement) {
       throw new Error('Элемент гоблина не существует');
     }
 
+    // 1. Если гоблин уже где-то есть, удаляем его оттуда
     if (this.goblinCell && this.goblinCell.contains(goblinElement)) {
-      this.goblinCell.removeChild(goblinElement);
+      goblinElement.remove();
       this.goblinCell.classList.remove('has-goblin');
+      this.goblinCell = null;
     }
 
+    // 2. Выбираем новую случайную позицию, отличную от текущей
     let newCell;
     do {
       newCell = this.getRandomCell();
-    } while (newCell === this.goblinCell);
+    } while (newCell === excludeCell); // Продолжаем, пока новая ячейка совпадает со старой
 
+    // 3. Помещаем гоблина в новую ячейку
     newCell.append(goblinElement);
     newCell.classList.add('has-goblin');
     this.goblinCell = newCell;
@@ -57,7 +61,7 @@ export default class Board {
 
   removeGoblin(goblinElement) {
     if (this.goblinCell && this.goblinCell.contains(goblinElement)) {
-      this.goblinCell.removeChild(goblinElement);
+      goblinElement.remove();
       this.goblinCell.classList.remove('has-goblin');
       this.goblinCell = null;
     }

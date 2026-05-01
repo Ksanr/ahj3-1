@@ -13,6 +13,7 @@ export default class GameController {
     this.scoreCounter = new ScoreCounter(scoreElement, missesElement);
     this.timer = new Timer();
     this.cursor = new Cursor(cursorElement);
+    this.cursor.show();
     this.goblinElement = null;
     this.isGameActive = false;
 
@@ -31,31 +32,34 @@ export default class GameController {
   onGoblinHit() {
     if (!this.isGameActive) return;
 
+    const previousCell = this.board.getCurrentGoblinCell(); // текущая ячейка
+
     this.scoreCounter.incrementScore();
     this.timer.stopTimer();
     this.board.removeGoblin(this.goblinElement);
-    this.showGoblin();
+    this.showGoblin(previousCell);
   }
 
   onGoblinHide() {
     if (!this.isGameActive) return;
 
+    const previousCell = this.board.getCurrentGoblinCell(); // текущая ячейка
     this.scoreCounter.incrementMiss();
     this.board.removeGoblin(this.goblinElement);
 
     if (this.scoreCounter.getMisses() < MAX_MISSES) {
-      this.showGoblin();
+      this.showGoblin(previousCell);
     }
   }
 
-  showGoblin() {
+  showGoblin(excludeCell = null) {
     if (!this.isGameActive) return;
 
     if (!this.goblinElement) {
       this.goblinElement = this.createGoblin();
     }
 
-    this.board.placeGoblin(this.goblinElement);
+    this.board.placeGoblin(this.goblinElement, excludeCell);
     this.timer.startTimer();
   }
 
@@ -72,7 +76,8 @@ export default class GameController {
     });
 
     this.showGoblin();
-    this.cursor.show();
+    // удаляю следующую строку, так как курсор не скрываю
+    // this.cursor.show();
   }
 
   endGame() {
@@ -83,7 +88,8 @@ export default class GameController {
       this.board.removeGoblin(this.goblinElement);
     }
 
-    this.cursor.hide();
+    // удалил строку, так как терялся курсор
+    // this.cursor.hide();
 
     const gameOverElement = document.getElementById('gameOver');
     const finalScoreElement = document.getElementById('finalScore');

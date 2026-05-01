@@ -50,6 +50,14 @@ describe('GameController', () => {
       expect(gameController.goblinElement.classList.contains('goblin')).toBe(true);
     });
 
+    test('гоблин не появляется дважды подряд в одной ячейке', () => {
+      gameController.startGame();
+      const firstCell = gameController.board.getCurrentGoblinCell();
+      gameController.onGoblinHit();
+      const secondCell = gameController.board.getCurrentGoblinCell();
+      expect(secondCell).not.toBe(firstCell);
+    });
+
     test('должен показывать курсор', () => {
       gameController.startGame();
       expect(cursorElement.style.display).not.toBe('none');
@@ -412,7 +420,7 @@ describe('GameController', () => {
 
       // Удаляем гоблина
       if (gameController.goblinElement && gameController.goblinElement.parentNode) {
-        gameController.goblinElement.parentNode.removeChild(gameController.goblinElement);
+        gameController.goblinElement.parentNode.remove(gameController.goblinElement);
       }
 
       expect(() => {

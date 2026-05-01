@@ -5,14 +5,21 @@ describe('Cursor', () => {
   let cursor;
 
   beforeEach(() => {
+    // Гарантируем наличие document.body
+    if (!document.body) {
+      const body = document.createElement('body');
+      document.documentElement.append(body);
+    }
     cursorElement = document.createElement('div');
     cursorElement.id = 'customCursor';
-    document.body.appendChild(cursorElement);
+    document.body.append(cursorElement);
     cursor = new Cursor(cursorElement);
   });
 
   afterEach(() => {
-    document.body.removeChild(cursorElement);
+    if (document.body && cursorElement) {
+      document.body.remove(cursorElement);
+    }
   });
 
   describe('init', () => {
